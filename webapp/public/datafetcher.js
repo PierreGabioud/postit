@@ -8,19 +8,26 @@ var PEOPLE = {
 var fetchedBlockNb = 0,
     fakeFetchedBlockNb = 0,
     experimentID = parseInt(Math.random()*10000000),
-    INTERVAL_TIME = 1000,
-    keywords = [];
+    INTERVAL_TIME = 1500,
+    keywords = [],
+    keywordsAlarms = [];
 
 $(document).ready(function(){
 
 
     var timelineContainer = $('#timelineContainer'),
-        keywordMatches = $('#keyword-matches');
+        keywordMatches = $('#keyword-matches'),
+        keywordMatchesAlarm = $('#keyword-matches-alarm');
 
 
     $('#keywords').on('input', function(){
-        keywords = $(this).val().split(' ');
-        console.log(keywords);
+        keywords = $(this).val().replace(/\s\s+/g, ' ').split(' ').filter(function(el){ return el.length > 2 });
+        console.log(keywords.length);
+    });
+
+    $('#keywords-alarm').on('input', function(){
+        keywordsAlarms = $(this).val().replace(/\s\s+/g, ' ').split(' ').filter(function(el){ return el.length > 2 });
+        console.log(keywordsAlarms.length);
     });
 
 
@@ -87,8 +94,21 @@ $(document).ready(function(){
     };
 
     var ctxTimeline = document.getElementById('timeline-chart').getContext('2d');
-    var timelineChart = Chart.Line(ctxTimeline, {
+    var timelineChart = new Chart(ctxTimeline, {
+        type: 'bar',
         data: dataTimelines,
+        options: {
+            scales: {
+                xAxes: [{
+                    display: true,
+                    stacked: true,
+                    //barPercentage: 1
+                }]
+            },
+            animation: {
+                duration: 0
+            }
+        }
     });
 
 
@@ -116,10 +136,17 @@ $(document).ready(function(){
             console.log(timelineChart.data.labels);
             timelineChart.data.labels.push(blockNb);
             timelineChart.data.datasets[PEOPLE[el.owner]].data.push(5);
-
-
             timelineChart.data.datasets[(PEOPLE[el.owner]+1)%3].data.push(0);
             timelineChart.data.datasets[(PEOPLE[el.owner]+2)%3].data.push(0);
+
+            if(blockNb > 6) {
+                timelineChart.data.labels = timelineChart.data.labels.slice(1);
+                timelineChart.data.datasets[PEOPLE[el.owner]].data = timelineChart.data.datasets[PEOPLE[el.owner]].data.slice(1);
+                timelineChart.data.datasets[(PEOPLE[el.owner]+1)%3].data = timelineChart.data.datasets[(PEOPLE[el.owner]+1)%3].data.slice(1);
+                timelineChart.data.datasets[(PEOPLE[el.owner]+2)%3].data = timelineChart.data.datasets[(PEOPLE[el.owner]+2)%3].data.slice(1);
+            }
+
+
             timelineChart.update();
 
         });
@@ -131,6 +158,16 @@ $(document).ready(function(){
         }));
     }
 
+    function addTextThatMatchedKeywordAlarm(text) {
+        keywordMatchesAlarm.append($('<p>', {
+            html: text
+        }));
+    }
+
+    function launchVisualAlarm() {
+        $("body").fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+    }
+
     function checkForKeywords(textBlocks) {
         var newText = "";
         textBlocks.forEach((el) => {
@@ -139,12 +176,24 @@ $(document).ready(function(){
         console.log(newText);
         var found = false;
         keywords.forEach(function(keyword){
-           if(newText.indexOf(keyword) != -1) {
+           if(keywords != ' ' && newText.indexOf(keyword) != -1) {
                found = true;
            }
         });
         if(found) {
             addTextThatMatchedKeyword(newText);
+        }
+
+
+        found = false;
+        keywordsAlarms.forEach(function(keyword){
+            if(keywordsAlarms != ' ' && newText.indexOf(keyword) != -1) {
+                found = true;
+            }
+        });
+        if(found) {
+            addTextThatMatchedKeywordAlarm(newText);
+            launchVisualAlarm();
         }
 
     }

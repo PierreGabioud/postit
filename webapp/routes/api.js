@@ -15,7 +15,7 @@ function randomGuy() {
     return users[Math.floor(Math.random()*users.length)];
 }
 
-var words = 'that is a wonderful idea I look forward to seeing you in hell you dumbass bullhock even summer is too much hell for you to see you bitch I like it you love it even though you go to the club';
+var words = 'that is a wonderful idea I look forward to seeing you in hell you dumbass bullhock even summer is too much hell for you to see you bitch I like it you love it even though you go to the club not only should we imagine a new world but I can only feel the pain in my brain you babydoll pierre marco pierre';
 words = words.split(' ');
 
 
@@ -25,7 +25,7 @@ function getRandomSentence(){
     }
 
     var string = "";
-    for(var i=0; i<Math.random()*4; i++) {
+    for(var i=0; i<Math.random()*10; i++) {
         string += getRandomWord()+' ';
     }
 
