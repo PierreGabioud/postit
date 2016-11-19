@@ -14,8 +14,7 @@
     "hapi": "^15.2.0",
     "inert": "^4.0.2",
     "request": "^2.79.0",
-    "vision": "^4.1.0"
-    "querystring": "^0.2.0",
-    "request": "^2.79.0"
+    "vision": "^4.1.0",
+    "querystring": "^0.2.0"
   }
 }
