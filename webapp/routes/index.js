@@ -19,11 +19,14 @@ exports.register = function(server, options, next) {
         '26c07b8e-4537-4ff7-bc68-8686725942e8'  //Pierre
     ]
 
+    var count = 0;
+
     io.on('connection', function (socket) {
         var audioBatch = [];
         var count = 0;
 
         socket.on('audioData', function (payload) {
+
 
             var test = JSON.stringify(payload.audioBuffer);
             audioBatch = audioBatch + test;
@@ -32,7 +35,6 @@ exports.register = function(server, options, next) {
             var wav = require('node-wav');
             wav.encode(test, { sampleRate: 16000, float: true, bitDepth: 16 });
             fs.writeFileSync('audio.wav', wav);
-
 
 
             count++;
@@ -54,10 +56,8 @@ exports.register = function(server, options, next) {
 
                  //   }
                 //);
-
                 count = 0;
             }
-
         });
     });
 

@@ -9,7 +9,7 @@ navigator.webkitGetUserMedia ||
 navigator.mozGetUserMedia ||
 navigator.msGetUserMedia);
 
-navigator.getUserMedia(session, initializeRecorder, function(err){ console.log(err); });
+//navigator.getUserMedia(session, initializeRecorder, function(err){ console.log(err); });
 
 function initializeRecorder(stream) {
     var audioContext = window.AudioContext;
@@ -42,6 +42,7 @@ function convertFloat32ToInt16(buffer) {
 
 var socket = io('http://localhost:8000');
 
+
 //var time = performance.now();
 
 function recorderProcess(e) {
@@ -50,6 +51,7 @@ function recorderProcess(e) {
 
    // console.log(performance.now()-time);
    // time = performance.now();
+
 
     socket.emit('audioData', {
         audioBuffer: dataToSend

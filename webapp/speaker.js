@@ -105,8 +105,8 @@ function checkForCompletion (url, resolve, reject) {
     loop();
 };
 
-function identify (profiles, filename) {
-  var wav = fs.readFileSync(filename + '.wav');
+function identify (profiles, wav) {
+  //var wav = fs.readFileSync(filename + '.wav');
 
   var options = {
     url: 'https://api.projectoxford.ai/spid/v1.0/identify?identificationProfileIds=' + profiles.join(',') + '&shortAudio=true',
@@ -117,6 +117,7 @@ function identify (profiles, filename) {
     body: wav,
     method:'POST'
   };
+
   return new Promise(function(resolve, reject) {
 
     function callback(error, response, body) {
