@@ -13,8 +13,10 @@
     "handlebars": "^4.0.6",
     "hapi": "^15.2.0",
     "inert": "^4.0.2",
+    "mongojs": "^2.4.0",
+    "querystring": "^0.2.0",
     "request": "^2.79.0",
-    "vision": "^4.1.0",
-    "querystring": "^0.2.0"
+    "socket.io": "^1.5.1",
+    "vision": "^4.1.0"
   }
 }

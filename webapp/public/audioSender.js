@@ -42,12 +42,15 @@ function convertFloat32ToInt16(buffer) {
 
 var socket = io('http://localhost:8000');
 
+var time = performance.now();
 
 function recorderProcess(e) {
     var left = e.inputBuffer.getChannelData(0);
-    var dataToSend = convertFloat32ToInt16(left);
+    //var dataToSend = convertFloat32ToInt16(left);
+    console.log(performance.now()-time);
+    time = performance.now();
     socket.emit('audioData', {
-        data: dataToSend
+        audioBuffer: left
     });
 }
 

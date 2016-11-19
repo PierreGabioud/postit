@@ -11,11 +11,16 @@ exports.register = function(server, options, next) {
 
     var io = require('socket.io')(server.listener);
 
+    var count = 0;
+
     io.on('connection', function (socket) {
 
         socket.on('audioData', function (payload) {
-            console.log('received' + JSON.stringify(payload));
-
+            count++;
+            if(count == 100) {
+                console.log('5 seconds done');
+                count = 0;
+            }
         });
     });
 
