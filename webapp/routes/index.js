@@ -1,6 +1,4 @@
 exports.register = function(server, options, next) {
-    const db = server.app.db;
-
 
     server.route({
         method:"GET",
