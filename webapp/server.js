@@ -17,6 +17,7 @@ server.register(Inert, () => {});
 
 server.register([
     require("./routes/index.js"), //Basic views
+    require("./routes/api.js"), //Basic views
 ], (err) => {
     if(err) {
         throw err;

@@ -9,7 +9,7 @@ navigator.webkitGetUserMedia ||
 navigator.mozGetUserMedia ||
 navigator.msGetUserMedia);
 
-navigator.getUserMedia(session, initializeRecorder, function(err){ console.log(err); });
+//navigator.getUserMedia(session, initializeRecorder, function(err){ console.log(err); });
 
 function initializeRecorder(stream) {
     var audioContext = window.AudioContext;
