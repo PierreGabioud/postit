@@ -1,3 +1,6 @@
+// var wav = require('wav');
+var headerGen = require("waveheader");
+
 exports.register = function(server, options, next) {
 
     server.route({
@@ -22,42 +25,53 @@ exports.register = function(server, options, next) {
     var count = 0;
 
     io.on('connection', function (socket) {
-        var audioBatch = [];
+        var audioBatch = null;
         var count = 0;
 
         socket.on('audioData', function (payload) {
 
+            // var test = JSON.stringify(payload.audioBuffer);
+            if (!audioBatch) audioBatch = payload.audioBuffer;
+            else audioBatch = Buffer.concat([audioBatch, payload.audioBuffer]);
+            // console.log(test);
 
-            var test = JSON.stringify(payload.audioBuffer);
-            audioBatch = audioBatch + test;
-            console.log(test);
-
-            var wav = require('node-wav');
-            wav.encode(test, { sampleRate: 16000, float: true, bitDepth: 16 });
-            fs.writeFileSync('audio.wav', wav);
-
-
-            count++;
-            if(count >= 100){
-                // process batch to API
-                console.log('100 blocks received');
-                console.log(audioBatch);
-
-                //convert to WAV
-                var wav = require('node-wav');
-                wav.encode(audioBatch, { sampleRate: 16000, float: true, bitDepth: 16 });
-                fs.writeFileSync('audio.wav', wav);
-
-                //identify speaker on this block.
-
-                //identify(profiles, wav).then(function saveSpeaker(status){
-                  //  console.log(status);
+            var out = Buffer.concat([headerGen(0), audioBatch]);
+            fs.writeFileSync('demo.wav', out);
 
 
-                 //   }
-                //);
-                count = 0;
-            }
+            // var fileWriter = new wav.FileWriter('demo.wav', {
+            //     channels: 1,
+            //     sampleRate: 48000,
+            //     bitDepth: 16
+            //   });
+            // console.log(streamifier.createReadStream(payload.audioBuffer)) //.pipe(fileWriter);
+
+           // var out = wav.encode(audioBatch, { sampleRate: 16000, float: true, bitDepth: 16 });
+            // console.log(out)
+            // fs.writeFileSync('audio.wav', out, 'binary');
+
+
+            // count++;
+            // if(count >= 100){
+            //     // process batch to API
+            //     console.log('100 blocks received');
+            //     console.log(audioBatch);
+
+            //     //convert to WAV
+            //     var wav = require('node-wav');
+            //     wav.encode(audioBatch, { sampleRate: 16000, float: true, bitDepth: 16 });
+            //     fs.writeFileSync('audio3.wav', test);
+
+            //     //identify speaker on this block.
+
+            //     //identify(profiles, wav).then(function saveSpeaker(status){
+            //       //  console.log(status);
+
+
+            //      //   }
+            //     //);
+            //     count = 0;
+            // }
         });
     });
 

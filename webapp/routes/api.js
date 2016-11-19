@@ -1,10 +1,10 @@
 var db = require('../database');
 var _ = require('underscore');
-db.storeBlockText(0, 0, "lalal");
-db.storeBlockText(0, 1, "blabla");
+// db.storeBlockText(0, 0, "lalal");
+// db.storeBlockText(0, 1, "blabla");
 
-db.storeBlockOwner(0, 0, "marco");
-db.storeBlockOwner(0, 1, "pierre");
+// db.storeBlockOwner(0, 0, "marco");
+// db.storeBlockOwner(0, 1, "pierre");
 
 
 exports.register = function(server, options, next) {
