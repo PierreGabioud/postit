@@ -1,15 +1,82 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>capture microphone audio into buffer</title>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Post-it</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
 
-
-    <div id="timelineContainer"></div>
-
+    <style>
+        body {
+            background-color: #e9e9eb;
+        }
+    </style>
 
 </head>
 <body>
 
+
+<div class="container">
+
+    <div class="row">
+
+    </div>
+
+    <div class="row">
+
+
+        <div class="col s6">
+            <div class="card">
+                <div class="card-content">
+
+                    <label for="keywords"></label>
+                    <input type="text" id="keywords" placeholder="keywords">
+
+                    <div id="keyword-matches">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col s6">
+            <div class="card">
+                <div class="card-content">
+
+                    <canvas id="donut-global" width="1000" height="500"></canvas>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col s6">
+            <div class="card">
+                <div class="card-content">
+                    <div id="timelineContainer" style="font-size:10px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s6">
+            <div class="card">
+                <div class="card-content">
+                    <canvas width="1000" height="800" id="timeline-chart"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script src="/public/libs/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+
 <script src="/public/audioSender.js"></script>
 <!-- <script src="/public/datafetcher.js"></script> -->
 </body>

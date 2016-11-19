@@ -10,7 +10,7 @@ exports.storeBlockText = function(experimentid, timeid, text) {
     experimentid: experimentid,
     timeid: timeid,
     text: text
-  }
+  };
   textBlocks.insert(blockData, function(err, result){
      if(err) {
          console.log(err);
@@ -23,7 +23,7 @@ exports.storeBlockOwner = function(experimentid, timeid, owner) {
     experimentid: experimentid,
     timeid: timeid,
     owner: owner
-  }
+  };
 
   ownerBlocks.insert(blockData, function(err, result){
      if(err) {
@@ -44,5 +44,5 @@ exports.getBlocksOwner = function(experimentid, timeid, cb) {
     experimentid: experimentid*1,
     timeid: {"$gte": timeid*1}
   }, cb);
-}
+};
 
