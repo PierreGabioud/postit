@@ -2,7 +2,6 @@ const Hapi = require('hapi');
 const Inert = require("inert");
 const Vision = require('vision');
 
-
 // Create a server with a host and port
 const server = new Hapi.Server();
 
