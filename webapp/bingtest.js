@@ -1,7 +1,7 @@
 var bb = require('bingspeech-api-client');
 
 // audio input in a Buffer 
-var wav = fs.readFileSync('myaudiofile.wav');
+var wav = fs.readFileSync('audio.wav');
 
 // Bing Speech Key (https://www.microsoft.com/cognitive-services/en-us/subscriptions) 
 var subscriptionKey = {
