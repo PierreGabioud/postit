@@ -17,7 +17,8 @@ $(document).ready(function(){
 
     var timelineContainer = $('#timelineContainer'),
         keywordMatches = $('#keyword-matches'),
-        keywordMatchesAlarm = $('#keyword-matches-alarm');
+        keywordMatchesAlarm = $('#keyword-matches-alarm'),
+        enableAlarms = false;
 
 
     $('#keywords').on('input', function(){
@@ -28,6 +29,10 @@ $(document).ready(function(){
     $('#keywords-alarm').on('input', function(){
         keywordsAlarms = $(this).val().replace(/\s\s+/g, ' ').split(' ').filter(function(el){ return el.length > 2 });
         console.log(keywordsAlarms.length);
+    });
+
+    $('#enable-alarms').on('change', function(){
+       enableAlarms = $(this).is(':checked');
     });
 
 
@@ -93,6 +98,7 @@ $(document).ready(function(){
         ]
     };
 
+    /*
     var ctxTimeline = document.getElementById('timeline-chart').getContext('2d');
     var timelineChart = new Chart(ctxTimeline, {
         type: 'bar',
@@ -111,6 +117,7 @@ $(document).ready(function(){
         }
     });
 
+*/
 
     function getNiceTime(timeid) {
        return timeid * INTERVAL_TIME/1000;
@@ -160,6 +167,14 @@ $(document).ready(function(){
             sharedTime.data.datasets[0].data[PEOPLE[el.owner]] += 5;
             sharedTime.update();
 
+
+            dataTable.addRows([
+                [el.owner, blockNb, blockNb+1]
+            ]);
+
+            chart.draw(dataTable);
+
+            /*
             console.log(timelineChart.data.labels);
             timelineChart.data.labels.push(blockNb);
             timelineChart.data.datasets[PEOPLE[el.owner]].data.push(5);
@@ -175,6 +190,7 @@ $(document).ready(function(){
 
 
             timelineChart.update();
+            */
 
         });
     }
@@ -220,13 +236,10 @@ $(document).ready(function(){
         });
         if(found) {
             addTextThatMatchedKeywordAlarm(newText);
-            launchVisualAlarm();
+            if(enableAlarms){
+                launchVisualAlarm();
+            }
         }
-
-    }
-
-    function createNewBubble(){
-
 
     }
 
@@ -299,6 +312,39 @@ $(document).ready(function(){
         startSessionTime = (new Date()).getTime();
 
     }, INTERVAL_TIME);
+
+
+    google.charts.load('current', {'packages':['timeline']});
+    google.charts.setOnLoadCallback(drawChart);
+    var dataTable,
+        chart,
+        container;
+
+    function drawChart() {
+        container = document.getElementById('timeline');
+        chart = new google.visualization.Timeline(container);
+        dataTable = new google.visualization.DataTable();
+
+        dataTable.addColumn({ type: 'string', id: 'President' });
+        dataTable.addColumn({ type: 'number', id: 'Start' });
+        dataTable.addColumn({ type: 'number', id: 'End' });
+        dataTable.addRows([
+            //[ 'marco',      new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
+            //[ 'ben',  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]
+            ]);
+
+        chart.draw(dataTable);
+
+        /*
+        setTimeout(function(){
+            dataTable.addRows([
+                ['Washington', new Date(1840, 4, 30), new Date(1850, 5, 4)]
+            ]);
+
+            chart.draw(dataTable);
+        },2000);
+        */
+    }
 
 
 });
