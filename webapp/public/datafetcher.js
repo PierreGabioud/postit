@@ -138,15 +138,36 @@ $(document).ready(function(){
         });
     }
 
-    function addTextThatMatchedKeyword(text) {
+    function addTextThatMatchedKeyword(text, matches) {
+
+        var allWords = text.split(' ');
+        allWords = allWords.map(function(el) {
+            if(matches.indexOf(el) != -1) {
+                return '<span class="keyword">'+el+'</span>'
+            } else {
+                return el;
+            }
+        });
+
+
         keywordMatches.append($('<p>', {
-            html: text
+            html: allWords.join(' ')
         }));
     }
 
-    function addTextThatMatchedKeywordAlarm(text) {
+    function addTextThatMatchedKeywordAlarm(text, matches) {
+
+        var allWords = text.split(' ');
+        allWords = allWords.map(function(el) {
+            if(matches.indexOf(el) != -1) {
+                return '<span class="keyword-alarm">'+el+'</span>'
+            } else {
+                return el;
+            }
+        });
+
         keywordMatchesAlarm.append($('<p>', {
-            html: text
+            html: allWords.join(' ')
         }));
     }
 
@@ -171,25 +192,29 @@ $(document).ready(function(){
         textBlocks.forEach((el) => {
             newText += el.text;
         });
-        var found = false;
+        var found = false,
+            matches = [];
         keywords.forEach(function(keyword){
             if(keywords != ' ' && newText.indexOf(keyword) != -1) {
                 found = true;
+                matches.push(keyword);
             }
         });
         if(found) {
-            addTextThatMatchedKeyword(newText);
+            addTextThatMatchedKeyword(newText, matches);
         }
 
 
         found = false;
+        var matchesAlarm = [];
         keywordsAlarms.forEach(function(keyword){
             if(keywordsAlarms != ' ' && newText.indexOf(keyword) != -1) {
                 found = true;
+                matchesAlarm.push(keyword);
             }
         });
         if(found) {
-            addTextThatMatchedKeywordAlarm(newText);
+            addTextThatMatchedKeywordAlarm(newText, matchesAlarm);
             if(enableAlarms){
                 launchVisualAlarm();
             }
