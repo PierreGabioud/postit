@@ -16,14 +16,39 @@
             background-color:rgb(209,240,193);
         }
         .chip-1 {
-            background-color:rgb(233,194,191);
+            background-color:rgb(187,192,242);
             margin-left: 10%;
         }
 
         .chip-2 {
-            background-color:rgb(187,192,242);
+            background-color:rgb(233,194,191);
             margin-left: 20%;
         }
+
+        #timelineContainer {
+            font-size:10px; overflow-y: auto; height: 300px;
+        }
+
+        .post-it {
+            background:#fefabc;
+            padding:15px;
+            font-family: 'Gloria Hallelujah', cursive;
+            font-size:15px;
+            color: #000;
+            width:200px;
+
+            -moz-transform: rotate(7deg);
+            -webkit-transform: rotate(7deg);
+            -o-transform: rotate(7deg);
+            -ms-transform: rotate(7deg);
+            transform: rotate(7deg);
+
+            box-shadow: 0px 4px 6px #333;
+            -moz-box-shadow: 0px 4px 6px #333;
+            -webkit-box-shadow: 0px 4px 6px #333;
+
+        }
+
     </style>
 
 </head>
@@ -35,6 +60,7 @@
     <div class="row">
         <div class="col s12">
             <h4 class="center-align"><img src="/public/logo.png" alt=""></h4>
+            <button id="stop">Stop recording</button>
         </div>
     </div>
 
@@ -87,15 +113,28 @@
         <div class="col s6">
             <div class="card">
                 <div class="card-content">
-                    <div id="timelineContainer" style="font-size:10px;"></div>
+                    <div id="timelineContainer"></div>
                 </div>
             </div>
         </div>
 
         <div class="col s6">
-            <div class="card">
+            <div class="card" style="height:340px;">
                 <div class="card-content">
                     <div id="timeline"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col s6">
+            <div class="card">
+                <div class="card-content">
+                    <div id="post-its">
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -112,7 +151,7 @@
 <script src="/public/libs/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 
-<!--<script src="/public/audioSender.js"></script>-->
+<script src="/public/audioSender.js"></script>
 <script src="/public/datafetcher.js"></script>
 </body>
 </html>
