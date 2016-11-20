@@ -1,7 +1,7 @@
 var request = require('request');
 var fs = require('fs');
 
-var subs_key = '33cdb7f928d3451cbbae38849f6be56d';
+var subs_key = 'b0627a1f44154ae6b1cef98b79dd6e6f';
 
 
 function createProfile (file) {
@@ -98,6 +98,9 @@ function checkForCompletion (url, resolve, reject) {
               resolve(status);
               break;
           }
+          if (status.processingResult.identifiedProfileId) {
+            resolve (status);
+          }
           break;
         }
       });
@@ -106,9 +109,6 @@ function checkForCompletion (url, resolve, reject) {
 };
 
 exports.identify = function(profiles, wav) {
-  // var wav = fs.readFileSync(filename + '.wav');
-  console.log(wav);
-
   var options = {
     url: 'https://api.projectoxford.ai/spid/v1.0/identify?identificationProfileIds=' + profiles.join(',') + '&shortAudio=true',
     headers: {
@@ -122,8 +122,6 @@ exports.identify = function(profiles, wav) {
   return new Promise(function(resolve, reject) {
 
     function callback(error, response, body) {
-      console.log(JSON.stringify(response))
-      console.log(response.headers['operation-location'])
       checkForCompletion(response.headers['operation-location'], resolve, reject);
     }
     request(options, callback);

@@ -34,7 +34,6 @@ exports.register = function(server, options, next) {
 
 
             count++;
-            console.log(count);
             if (count == 25) {
                 count = 0;
                 var out = Buffer.concat([headerGen(audioBatch.length), audioBatch]);
@@ -43,7 +42,7 @@ exports.register = function(server, options, next) {
 
                     job.on('close', (code) => {
                         fs.readFile('0_out.wav', (err, outFinal) => {
-                            require('../controllers/block.js').treatBlock(outFinal);
+                            require('../controllers/block.js').treatBlock(timeid, outFinal);
                         });
                     });
                 });
