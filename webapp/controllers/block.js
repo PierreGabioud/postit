@@ -7,14 +7,25 @@ var profiles = [
 
 exports.treatBlock = (expid, timeid, outFinal) => {
     require('../speaker.js').identify(profiles, outFinal).then( (status) => {
-        console.log(mapProfiles(status.processingResult.identifiedProfileId)); //'00000000-0000-0000-0000-000000000000'
+
+        var profile = mapProfiles(status.processingResult.identifiedProfileId);
+
+        console.log(profile); //'00000000-0000-0000-0000-000000000000'
+
+        require('../database.js').storeBlockOwner(expid, timeid, profile );
+
+
     });
     require('../speechToText.js').speech2text(outFinal).then((body) => {
         console.log(body);
-        console.log(JSON.parse(body).results[0].lexical);
+        var text = JSON.parse(body).results[0].lexical
+        console.log(text);
+
+        require('../database.js').storeBlockText(expid, timeid, text );
+
+
     });
 
-    require('../database.js').storeBlockOwner(expId, experimentID)
 
 }
 
