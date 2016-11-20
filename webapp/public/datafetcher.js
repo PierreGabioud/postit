@@ -60,7 +60,7 @@ $(document).ready(function(){
         labels: [
             "Marco",
             "Pierre",
-            "BenJ",
+            "Ben",
         ]
     };
 
