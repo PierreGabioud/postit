@@ -103,7 +103,7 @@ $(document).ready(function(){
         }
 
         var scrollHeight = timelineContainer[0].scrollHeight;
-        if(scrollHeight > timelineContainer.height() + 500) {
+        if(scrollHeight > timelineContainer.height() + 100) {
             timelineContainer.animate({
                 scrollTop: scrollHeight
             }, 2000);
@@ -144,6 +144,15 @@ $(document).ready(function(){
         }));
     }
 
+    function addTextThatMatchedKeywordTakeNote(text) {
+        var index = (text.indexOf('note') + 4);
+        console.error('SUBBBBBBB = '+text.substring(index));
+        $('#post-its').append($('<div>', {
+            class: 'post-it',
+            html: text.substring(index)
+        }));
+    }
+
     function launchVisualAlarm() {
         $("body").fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
     }
@@ -153,7 +162,6 @@ $(document).ready(function(){
         textBlocks.forEach((el) => {
             newText += el.text;
         });
-        console.log(newText);
         var found = false;
         keywords.forEach(function(keyword){
             if(keywords != ' ' && newText.indexOf(keyword) != -1) {
@@ -180,6 +188,18 @@ $(document).ready(function(){
 
     }
 
+
+    function checkForTakeNoteKeyword(textBlocks) {
+        var newText = "";
+        textBlocks.forEach((el) => {
+            newText += el.text;
+        });
+
+        if(newText.indexOf('takenote') != -1 || newText.indexOf('take note') != -1 || newText.indexOf('take a note') != -1) {
+            addTextThatMatchedKeywordTakeNote(newText);
+        }
+
+    }
 
     var startSessionTime = (new Date()).getTime();
 
@@ -218,6 +238,7 @@ $(document).ready(function(){
             addToTimeline(blocksPeople[0], blocksText[0]);
             addToStats(blocksPeople[0], fetchedBlockNb);
             checkForKeywords(blocksText[0]);
+            checkForTakeNoteKeyword(blocksText[0]);
             fetchedBlockNb+=blocksText[0].length;
         });
 
