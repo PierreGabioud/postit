@@ -146,11 +146,14 @@ $(document).ready(function(){
 
     function addTextThatMatchedKeywordTakeNote(text) {
         var index = (text.indexOf('note') + 4);
-        console.error('SUBBBBBBB = '+text.substring(index));
-        $('#post-its').append($('<div>', {
-            class: 'post-it',
-            html: text.substring(index)
-        }));
+        var note = text.substring(index);
+        if(note.length > 2) {
+            $('#post-its').append($('<div>', {
+                class: 'post-it',
+                html: note
+            }));
+        }
+
     }
 
     function launchVisualAlarm() {
