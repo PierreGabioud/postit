@@ -102,6 +102,12 @@ $(document).ready(function(){
 
         }
 
+        console.log('LENGTH = '+lastDiv.text().length);
+        if(lastDiv.text().length > 80) {
+            lastDiv.css({'height':'45px', 'line-height': '20px'});
+        }
+
+
         var scrollHeight = timelineContainer[0].scrollHeight;
         if(scrollHeight > timelineContainer.height() + 100) {
             timelineContainer.animate({
@@ -256,7 +262,7 @@ $(document).ready(function(){
         chart,
         container,
         options = {
-            colors: ['rgb(209,240,193)', 'rgb(233,194,191)', 'rgb(187,192,242)'],
+            colors: ['rgb(209,240,193)', 'rgb(187,192,242)', 'rgb(233,194,191)'],
         };
 
 
@@ -269,9 +275,9 @@ $(document).ready(function(){
         dataTable.addColumn({ type: 'number', id: 'Start' });
         dataTable.addColumn({ type: 'number', id: 'End' });
         dataTable.addRows([
-            [ 'marco', 0,  0.1 ],
-            [ 'pierre', 0,  0.1 ],
-            [ 'ben', 0,  0.1 ],
+            [ 'marco', -0.1,  0 ],
+            [ 'pierre', -0.1,  0 ],
+            [ 'ben', -0.1,  0 ],
         ]);
 
         window.dataTable = dataTable;
