@@ -1,7 +1,6 @@
 // var wav = require('wav');
 var headerGen = require("waveheader");
 var wav = require('node-wav');
-var sox = require('sox');
 const spawn = require('child_process').spawn;
 
 
