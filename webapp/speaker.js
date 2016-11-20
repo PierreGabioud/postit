@@ -66,7 +66,6 @@ function getEnrollmentStatus (url) {
     function callback(error, response, body) {
       resolve(body);
     }
-
     request(options, callback);
   });
 }
@@ -105,8 +104,9 @@ function checkForCompletion (url, resolve, reject) {
     loop();
 };
 
-function identify (profiles, wav) {
-  //var wav = fs.readFileSync(filename + '.wav');
+exports.identify = function(profiles, wav) {
+  // var wav = fs.readFileSync(filename + '.wav');
+  console.log(wav);
 
   var options = {
     url: 'https://api.projectoxford.ai/spid/v1.0/identify?identificationProfileIds=' + profiles.join(',') + '&shortAudio=true',
@@ -121,9 +121,9 @@ function identify (profiles, wav) {
   return new Promise(function(resolve, reject) {
 
     function callback(error, response, body) {
+      console.log(response.headers['operation-location'])
       checkForCompletion(response.headers['operation-location'], resolve, reject);
     }
-
     request(options, callback);
   });
 }
@@ -131,4 +131,4 @@ function identify (profiles, wav) {
 
 
 // createProfile('marco').then(createEnrollment);
-identify(['a499ce4c-6639-4940-82cc-3f9485e55370', '26c07b8e-4537-4ff7-bc68-8686725942e8'], 'test');
+// identify(['a499ce4c-6639-4940-82cc-3f9485e55370', '26c07b8e-4537-4ff7-bc68-8686725942e8'], fs.readFileSync('test.wav'););

@@ -1,5 +1,7 @@
 // var wav = require('wav');
 var headerGen = require("waveheader");
+var wav = require('node-wav');
+
 
 exports.register = function(server, options, next) {
 
@@ -35,9 +37,16 @@ exports.register = function(server, options, next) {
             else audioBatch = Buffer.concat([audioBatch, payload.audioBuffer]);
             // console.log(test);
 
-            var out = Buffer.concat([headerGen(0), audioBatch]);
-            fs.writeFileSync('demo.wav', out);
 
+            count++;
+
+            if (count == 100) {
+                var out = Buffer.concat([headerGen(audioBatch.length), audioBatch]);
+                result = wav.decode(out);
+                var outFinal = wav.encode(result.channelData, { sampleRate: 16000, bitDepth: 16});
+                require('../speaker.js').identify(profiles, outFinal);
+                fs.writeFileSync('demo2.wav', outFinal);
+            }
 
             // var fileWriter = new wav.FileWriter('demo.wav', {
             //     channels: 1,
