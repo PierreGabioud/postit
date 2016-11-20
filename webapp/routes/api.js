@@ -41,7 +41,7 @@ exports.register = function(server, options, next) {
             expid = encodeURIComponent(request.params.expid);
             timeid = request.params.timeid ? encodeURIComponent(request.params.timeid) : 0;
 
-            console.log('expID = '+expid+', '+timeid);
+            // console.log('expID = '+expid+', '+timeid);
 
 
             db.getBlocksText(expid, timeid, function (err, blocks) {
@@ -57,7 +57,7 @@ exports.register = function(server, options, next) {
         handler: function (request, reply) {
             expid = encodeURIComponent(request.params.expid);
 
-            console.log('expID = '+expid+', '+request.params.timeid);
+            // console.log('expID = '+expid+', '+request.params.timeid);
 
             timeid = request.params.timeid ? encodeURIComponent(request.params.timeid) : 0;
             db.getBlocksOwner(expid, timeid, function (err, blocks) {

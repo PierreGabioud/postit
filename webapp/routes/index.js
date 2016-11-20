@@ -26,7 +26,8 @@ exports.register = function(server, options, next) {
 
         socket.on('audioData', function (payload) {
 
-            // var test = JSON.stringify(payload.audioBuffer);
+            var  expId = payload.expId;
+            // console.log(JSON.stringify(payload.audioBuffer));
             if (!audioBatch) {audioBatch = payload.audioBuffer;}
             else {audioBatch = Buffer.concat([audioBatch, payload.audioBuffer])};
             // console.log(test);
@@ -37,11 +38,13 @@ exports.register = function(server, options, next) {
                 count = 0;
                 var out = Buffer.concat([headerGen(audioBatch.length), audioBatch]);
                 fs.writeFile('0.wav', out, () => {
+
                     var job = spawn('ffmpeg', ['-i', '0.wav', '-ac', '1', '-acodec', 'pcm_s16le', '-ar', '16000', '-y', '0_out.wav']);
 
                     job.on('close', (code) => {
                         fs.readFile('0_out.wav', (err, outFinal) => {
-                            require('../controllers/block.js').treatBlock(timeid, outFinal);
+                            require('../controllers/block.js').treatBlock(expId, timeid, outFinal);
+
                         });
                     });
                 });

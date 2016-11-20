@@ -60,7 +60,7 @@ $(document).ready(function(){
         labels: [
             "Marco",
             "Pierre",
-            "BenJ",
+            "Ben",
         ]
     };
 
@@ -238,7 +238,7 @@ $(document).ready(function(){
     var startSessionTime = (new Date()).getTime();
 
 
-    var intervalFakeCreation = setInterval(function(){
+/*    var intervalFakeCreation = setInterval(function(){
         console.log('POSTING FAKE DATA');
         $.ajax({
             url: '/api/createFakeBlock/' + experimentID + '/' + fakeFetchedBlockNb,
@@ -248,7 +248,7 @@ $(document).ready(function(){
                 fakeFetchedBlockNb++;
             }
         });
-    }, INTERVAL_TIME );
+    }, INTERVAL_TIME );*/
 
     var interval = setInterval(function(){
         console.log('GETTING FAKE DATA');
