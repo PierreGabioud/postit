@@ -8,7 +8,7 @@ var PEOPLE = {
 var fetchedBlockNb = 0,
     fakeFetchedBlockNb = 0,
     experimentID = parseInt(Math.random()*10000000),
-    INTERVAL_TIME = 1500,
+    INTERVAL_TIME = 3000,
     keywords = [],
     keywordsAlarms = [];
 
@@ -65,69 +65,11 @@ $(document).ready(function(){
     });
 
 
-    var dataTimelines = {
-        labels: [],
-        datasets: [
-            {
-                label: "Marco",
-                fill: true,
-                lineTension: 0.1,
-                backgroundColor: "rgba(120,120,240,0.5)",
-                borderColor: "rgba(120,120,240,0.9)",
-                data: [],
-                spanGaps: false,
-            },
-            {
-                label: "Pierre",
-                fill: true,
-                lineTension: 0.1,
-                backgroundColor: "rgba(120,240,120,0.5)",
-                borderColor: "rgba(120,240,120,0.9)",
-                data: [],
-                spanGaps: true,
-            },
-            {
-                label: "Ben",
-                fill: true,
-                lineTension: 0.1,
-                backgroundColor: "rgba(240,120,120,0.5)",
-                borderColor: "rgba(240,120,120,0.9)",
-                data: [],
-                spanGaps: false,
-            }
-        ]
-    };
-
-    /*
-    var ctxTimeline = document.getElementById('timeline-chart').getContext('2d');
-    var timelineChart = new Chart(ctxTimeline, {
-        type: 'bar',
-        data: dataTimelines,
-        options: {
-            scales: {
-                xAxes: [{
-                    display: true,
-                    stacked: true,
-                    //barPercentage: 1
-                }]
-            },
-            animation: {
-                duration: 0
-            }
-        }
-    });
-
-*/
-
-    function getNiceTime(timeid) {
-       return timeid * INTERVAL_TIME/1000;
-    }
-
     var previousOwner = null;
     var currentText = '';
 
     function addToTimeline(text, owner) {
-        console.log(owner.owner +" : "+ text)
+        console.log(owner.owner +" : "+ text);
 
         if(!previousOwner) previousOwner = owner;
 
@@ -148,49 +90,22 @@ $(document).ready(function(){
         };
 
 
-
     }
 
-/*    function addToTimeline(blocksText) {
-        blocksText.forEach(function(el){
-            timelineContainer.append($('<div>', {
-                html: el.text+" "+getNiceTime(el.timeid),
-            }));
-
-
-        });
-
-    }*/
 
     function addToStats(blocksPeople, blockNb) {
+        var i=0;
         blocksPeople.forEach(function(el) {
             sharedTime.data.datasets[0].data[PEOPLE[el.owner]] += 5;
             sharedTime.update();
 
 
             dataTable.addRows([
-                [el.owner, blockNb, blockNb+1]
+                [el.owner, blockNb+i, blockNb+i+1]
             ]);
+            i++;
 
             chart.draw(dataTable);
-
-            /*
-            console.log(timelineChart.data.labels);
-            timelineChart.data.labels.push(blockNb);
-            timelineChart.data.datasets[PEOPLE[el.owner]].data.push(5);
-            timelineChart.data.datasets[(PEOPLE[el.owner]+1)%3].data.push(0);
-            timelineChart.data.datasets[(PEOPLE[el.owner]+2)%3].data.push(0);
-
-            if(blockNb > 6) {
-                timelineChart.data.labels = timelineChart.data.labels.slice(1);
-                timelineChart.data.datasets[PEOPLE[el.owner]].data = timelineChart.data.datasets[PEOPLE[el.owner]].data.slice(1);
-                timelineChart.data.datasets[(PEOPLE[el.owner]+1)%3].data = timelineChart.data.datasets[(PEOPLE[el.owner]+1)%3].data.slice(1);
-                timelineChart.data.datasets[(PEOPLE[el.owner]+2)%3].data = timelineChart.data.datasets[(PEOPLE[el.owner]+2)%3].data.slice(1);
-            }
-
-
-            timelineChart.update();
-            */
 
         });
     }
@@ -306,7 +221,7 @@ $(document).ready(function(){
             //addToTimeline(blocksText[0]);
             addToStats(blocksPeople[0], fetchedBlockNb);
             checkForKeywords(blocksText[0]);
-            fetchedBlockNb++;
+            fetchedBlockNb+=blocksText[0].length;
         });
 
         startSessionTime = (new Date()).getTime();
