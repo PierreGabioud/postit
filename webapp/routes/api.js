@@ -45,6 +45,7 @@ exports.register = function(server, options, next) {
 
 
             db.getBlocksText(expid, timeid, function (err, blocks) {
+                console.log(blocks);
                 reply(blocks);
             });
         },
