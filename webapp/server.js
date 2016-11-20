@@ -42,8 +42,6 @@ server.register(Vision, (err) => {
         },
         relativeTo: __dirname,
         path: 'templates',
-        partialsPath: "./partials",
-        helpersPath: "./templateHelpers"
     });
 });
 
