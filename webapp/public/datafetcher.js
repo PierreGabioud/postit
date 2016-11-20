@@ -72,8 +72,8 @@ $(document).ready(function(){
                 label: "Marco",
                 fill: true,
                 lineTension: 0.1,
-                backgroundColor: "rgba(192,75,192,0.4)",
-                borderColor: "rgba(192,75,192,1)",
+                backgroundColor: "rgba(120,120,240,0.5)",
+                borderColor: "rgba(120,120,240,0.9)",
                 data: [],
                 spanGaps: false,
             },
@@ -81,8 +81,8 @@ $(document).ready(function(){
                 label: "Pierre",
                 fill: true,
                 lineTension: 0.1,
-                backgroundColor: "rgba(75,192,192,0.4)",
-                borderColor: "rgba(75,192,192,1)",
+                backgroundColor: "rgba(120,240,120,0.5)",
+                borderColor: "rgba(120,240,120,0.9)",
                 data: [],
                 spanGaps: true,
             },
@@ -90,8 +90,8 @@ $(document).ready(function(){
                 label: "Ben",
                 fill: true,
                 lineTension: 0.1,
-                backgroundColor: "rgba(192,192,75, 0.4)",
-                borderColor: "rgba(192,192,75,1)",
+                backgroundColor: "rgba(240,120,120,0.5)",
+                borderColor: "rgba(240,120,120,0.9)",
                 data: [],
                 spanGaps: false,
             }
@@ -123,8 +123,35 @@ $(document).ready(function(){
        return timeid * INTERVAL_TIME/1000;
     }
 
+    var previousOwner = null;
+    var currentText = '';
 
-    function addToTimeline(blocksText) {
+    function addToTimeline(text, owner) {
+        console.log(owner.owner +" : "+ text)
+
+        if(!previousOwner) previousOwner = owner;
+
+
+        if(previousOwner.owner == owner.owner){
+
+            currentText += text;
+        }
+        else{
+            if(currentText.length > 0){
+                timelineContainer.append($('<div>', {
+                    html: previousOwner.owner +" : "+currentText,
+                }));
+            }
+            previousOwner = owner;
+            currentText = text;
+
+        };
+
+
+
+    }
+
+/*    function addToTimeline(blocksText) {
         blocksText.forEach(function(el){
             timelineContainer.append($('<div>', {
                 html: el.text+" "+getNiceTime(el.timeid),
@@ -133,7 +160,7 @@ $(document).ready(function(){
 
         });
 
-    }
+    }*/
 
     function addToStats(blocksPeople, blockNb) {
         blocksPeople.forEach(function(el) {
@@ -217,7 +244,6 @@ $(document).ready(function(){
     }
 
 
-
     var startSessionTime = (new Date()).getTime();
 
 
@@ -231,7 +257,7 @@ $(document).ready(function(){
                 fakeFetchedBlockNb++;
             }
         });
-    }, INTERVAL_TIME);
+    }, INTERVAL_TIME /3 );
 
     var interval = setInterval(function(){
         console.log('GETTING FAKE DATA');
@@ -247,12 +273,37 @@ $(document).ready(function(){
             method: 'GET'
         });
 
+        var currentSpeaker = null;
+        var nextText = '';
 
         $.when(getBlockTexts, getBlockPeople).then(function(blocksText, blocksPeople){
             console.log(blocksText[0]);
             console.log(blocksPeople[0]);
 
-            addToTimeline(blocksText[0]);
+            console.log(blocksText[0][0]);
+            console.log(blocksPeople[0][0]);
+
+            if(!currentSpeaker) currentSpeaker = blocksPeople[0][0];
+
+            var i = 0
+            while( i < blocksText[0].length ){
+                while(currentSpeaker == blocksPeople[0][i]  &&  i < blocksText[0].length ){
+                    nextText += blocksText[0][i].text;
+                    i++;
+                }
+
+                //create new bubble
+                addToTimeline(nextText, blocksPeople[0][i-1]);
+
+
+                currentSpeaker = blocksPeople[0][i];
+                nextText = blocksText[0][i].text;
+                i++;
+
+            }
+
+
+            //addToTimeline(blocksText[0]);
             addToStats(blocksPeople[0], fetchedBlockNb);
             checkForKeywords(blocksText[0]);
             fetchedBlockNb++;
