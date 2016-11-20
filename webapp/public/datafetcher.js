@@ -8,11 +8,18 @@ var PEOPLE = {
 var fetchedBlockNb = 0,
     fakeFetchedBlockNb = 0,
     experimentID = parseInt(Math.random()*10000000),
-    INTERVAL_TIME = 3000,
+    INTERVAL_TIME = 1000,
     keywords = [],
-    keywordsAlarms = [];
+    keywordsAlarms = [],
+    imgs;
 
 $(document).ready(function(){
+
+    imgs = {
+        'ben': $('<img>', {src: '/public/users/ben.png'}),
+        'marco': $('<img>', {src: '/public/users/marco.png'}),
+        'pierre': $('<img>', {src: '/public/users/pierre.png'})
+    };
 
 
     var timelineContainer = $('#timelineContainer'),
@@ -64,33 +71,39 @@ $(document).ready(function(){
         data: dataShareTime,
     });
 
+    var currentOwner,
+        lastDiv;
 
-    var previousOwner = null;
-    var currentText = '';
+    function addToTimeline(ownerArray, textArray) {
 
-    function addToTimeline(text, owner) {
-        console.log(owner.owner +" : "+ text);
+        for(var i=0; i<textArray.length; i++) {
+            console.log(ownerArray[i].owner, currentOwner);
+            if(ownerArray[i].owner != currentOwner) {
+                lastDiv = $('<div>', {
+                    class: 'chip chip-'+PEOPLE[ownerArray[i].owner]
+                });
+                var img = $('<img>', {
+                    src: '/public/users/'+ownerArray[i].owner+'.png',
+                    class: 'icon'
+                });
 
-        if(!previousOwner) previousOwner = owner;
 
+                var content = ownerArray[i].owner +" : "+textArray[i].text;
 
-        if(previousOwner.owner == owner.owner){
+                lastDiv.append(img).append(content).appendTo(timelineContainer);
 
-            currentText += text;
-        }
-        else{
-            if(currentText.length > 0){
-                timelineContainer.append($('<div>', {
-                    html: previousOwner.owner +" : "+currentText,
-                }));
+                currentOwner = ownerArray[i].owner;
+                console.log('NOT SAME OWNER '+lastDiv);
+
+            } else {
+                console.log('SAME OWNER '+lastDiv);
+                lastDiv.append( " " +textArray[i].text);
             }
-            previousOwner = owner;
-            currentText = text;
 
-        };
-
+        }
 
     }
+
 
 
     function addToStats(blocksPeople, blockNb) {
@@ -172,7 +185,7 @@ $(document).ready(function(){
                 fakeFetchedBlockNb++;
             }
         });
-    }, INTERVAL_TIME /3 );
+    }, INTERVAL_TIME );
 
     var interval = setInterval(function(){
         console.log('GETTING FAKE DATA');
@@ -192,33 +205,8 @@ $(document).ready(function(){
         var nextText = '';
 
         $.when(getBlockTexts, getBlockPeople).then(function(blocksText, blocksPeople){
-            console.log(blocksText[0]);
-            console.log(blocksPeople[0]);
 
-            console.log(blocksText[0][0]);
-            console.log(blocksPeople[0][0]);
-
-            if(!currentSpeaker) currentSpeaker = blocksPeople[0][0];
-
-            var i = 0
-            while( i < blocksText[0].length ){
-                while(currentSpeaker == blocksPeople[0][i]  &&  i < blocksText[0].length ){
-                    nextText += blocksText[0][i].text;
-                    i++;
-                }
-
-                //create new bubble
-                addToTimeline(nextText, blocksPeople[0][i-1]);
-
-
-                currentSpeaker = blocksPeople[0][i];
-                nextText = blocksText[0][i].text;
-                i++;
-
-            }
-
-
-            //addToTimeline(blocksText[0]);
+            addToTimeline(blocksPeople[0], blocksText[0]);
             addToStats(blocksPeople[0], fetchedBlockNb);
             checkForKeywords(blocksText[0]);
             fetchedBlockNb+=blocksText[0].length;

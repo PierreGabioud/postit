@@ -18,7 +18,6 @@ exports.register = function(server, options, next) {
     var io = require('socket.io')(server.listener);
     var fs = require('fs');
 
-    var count = 0;
 
     io.on('connection', function (socket) {
         var audioBatch = null;
