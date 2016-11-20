@@ -32,7 +32,7 @@ $(document).ready(function(){
     });
 
     $('#enable-alarms').on('change', function(){
-       enableAlarms = $(this).is(':checked');
+        enableAlarms = $(this).is(':checked');
     });
 
 
@@ -105,7 +105,7 @@ $(document).ready(function(){
             ]);
             i++;
 
-            chart.draw(dataTable);
+            chart.draw(dataTable, options);
 
         });
     }
@@ -129,14 +129,14 @@ $(document).ready(function(){
     function checkForKeywords(textBlocks) {
         var newText = "";
         textBlocks.forEach((el) => {
-           newText += el.text;
+            newText += el.text;
         });
         console.log(newText);
         var found = false;
         keywords.forEach(function(keyword){
-           if(keywords != ' ' && newText.indexOf(keyword) != -1) {
-               found = true;
-           }
+            if(keywords != ' ' && newText.indexOf(keyword) != -1) {
+                found = true;
+            }
         });
         if(found) {
             addTextThatMatchedKeyword(newText);
@@ -233,7 +233,10 @@ $(document).ready(function(){
     google.charts.setOnLoadCallback(drawChart);
     var dataTable,
         chart,
-        container;
+        container,
+        options = {
+            colors: ['rgb(209,240,193)', 'rgb(233,194,191)', 'rgb(187,192,242)'],
+        };
 
     function drawChart() {
         container = document.getElementById('timeline');
@@ -246,20 +249,8 @@ $(document).ready(function(){
         dataTable.addRows([
             //[ 'marco',      new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
             //[ 'ben',  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]
-            ]);
+        ]);
 
-        chart.draw(dataTable);
-
-        /*
-        setTimeout(function(){
-            dataTable.addRows([
-                ['Washington', new Date(1840, 4, 30), new Date(1850, 5, 4)]
-            ]);
-
-            chart.draw(dataTable);
-        },2000);
-        */
+        chart.draw(dataTable, options);
     }
-
-
 });
