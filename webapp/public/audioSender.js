@@ -54,7 +54,8 @@ function recorderProcess(e) {
 
 
     socket.emit('audioData', {
-        audioBuffer: dataToSend
+        audioBuffer: dataToSend,
+        expId : experimentID
     });
 }
 

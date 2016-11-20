@@ -26,6 +26,7 @@ exports.register = function(server, options, next) {
 
         socket.on('audioData', function (payload) {
 
+            var  expId = payload.expId;
             // var test = JSON.stringify(payload.audioBuffer);
             if (!audioBatch) {audioBatch = payload.audioBuffer;}
             else {audioBatch = Buffer.concat([audioBatch, payload.audioBuffer])};
@@ -41,7 +42,9 @@ exports.register = function(server, options, next) {
 
                     job.on('close', (code) => {
                         fs.readFile('0_out.wav', (err, outFinal) => {
-                            require('../controllers/block.js').treatBlock(timeid, outFinal);
+
+                            require('../controllers/block.js').treatBlock(expId, timeid, outFinal);
+
                         });
                     });
                 });
