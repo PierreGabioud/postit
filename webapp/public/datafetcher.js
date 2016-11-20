@@ -92,12 +92,25 @@ $(document).ready(function(){
 
                 lastDiv.append(img).append(content).appendTo(timelineContainer);
 
+                if(content.length <= 0) {
+                    lastDiv.hide();
+                }
+                else {
+                    lastDiv.show();
+                }
+
                 currentOwner = ownerArray[i].owner;
                 console.log('NOT SAME OWNER '+lastDiv);
 
             } else {
                 console.log('SAME OWNER '+lastDiv);
                 lastDiv.append( " " +textArray[i].text);
+                if(textArray[i].text.length <= 0) {
+                    lastDiv.hide();
+                }
+                else {
+                    lastDiv.show();
+                }
             }
 
         }
@@ -238,17 +251,17 @@ $(document).ready(function(){
     var startSessionTime = (new Date()).getTime();
 
 
-/*    var intervalFakeCreation = setInterval(function(){
-        console.log('POSTING FAKE DATA');
-        $.ajax({
-            url: '/api/createFakeBlock/' + experimentID + '/' + fakeFetchedBlockNb,
-            method: 'POST',
-            success: function (response) {
-                console.log(startSessionTime);
-                fakeFetchedBlockNb++;
-            }
-        });
-    }, INTERVAL_TIME );*/
+    /*    var intervalFakeCreation = setInterval(function(){
+     console.log('POSTING FAKE DATA');
+     $.ajax({
+     url: '/api/createFakeBlock/' + experimentID + '/' + fakeFetchedBlockNb,
+     method: 'POST',
+     success: function (response) {
+     console.log(startSessionTime);
+     fakeFetchedBlockNb++;
+     }
+     });
+     }, INTERVAL_TIME );*/
 
     var interval = setInterval(function(){
         console.log('GETTING FAKE DATA');

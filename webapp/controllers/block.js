@@ -18,7 +18,7 @@ exports.treatBlock = (expid, timeid, outFinal) => {
     });
     require('../speechToText.js').speech2text(outFinal).then((body) => {
         console.log(body);
-        var text = JSON.parse(body).results[0].lexical
+        var text = JSON.parse(body).results ? JSON.parse(body).results[0].lexical : '';
         console.log(text);
 
         require('../database.js').storeBlockText(expid, timeid, text );

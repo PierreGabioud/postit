@@ -34,7 +34,10 @@ exports.speech2text = (wav) => {
                     'scenarios': 'ulm'
                 }
             }, function(error, response, body) {
-                resolve(response.body);
+
+                // avoid undefined reponse error
+               if(response) resolve(response.body);
+
             });
 
 
