@@ -16,13 +16,17 @@
             background-color:rgb(209,240,193);
         }
         .chip-1 {
-            background-color:rgb(233,194,191);
+            background-color:rgb(187,192,242);
             margin-left: 10%;
         }
 
         .chip-2 {
-            background-color:rgb(187,192,242);
+            background-color:rgb(233,194,191);
             margin-left: 20%;
+        }
+
+        #timelineContainer {
+            font-size:10px; overflow-y: auto; height: 300px;
         }
     </style>
 
@@ -35,6 +39,7 @@
     <div class="row">
         <div class="col s12">
             <h4 class="center-align"><img src="/public/logo.png" alt=""></h4>
+            <button id="stop">Stop recording</button>
         </div>
     </div>
 
@@ -87,13 +92,13 @@
         <div class="col s6">
             <div class="card">
                 <div class="card-content">
-                    <div id="timelineContainer" style="font-size:10px;"></div>
+                    <div id="timelineContainer"></div>
                 </div>
             </div>
         </div>
 
         <div class="col s6">
-            <div class="card">
+            <div class="card" style="height:340px;">
                 <div class="card-content">
                     <div id="timeline"></div>
                 </div>

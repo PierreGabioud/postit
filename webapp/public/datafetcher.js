@@ -8,7 +8,7 @@ var PEOPLE = {
 var fetchedBlockNb = 0,
     fakeFetchedBlockNb = 0,
     experimentID = parseInt(Math.random()*10000000),
-    INTERVAL_TIME = 1000,
+    INTERVAL_TIME = 3000,
     keywords = [],
     keywordsAlarms = [],
     imgs;
@@ -51,15 +51,15 @@ $(document).ready(function(){
                 0
             ],
             backgroundColor: [
-                "rgba(120,120,240,0.5)",
                 "rgba(120,240,120,0.5)",
+                "rgba(120,120,240,0.5)",
                 "rgba(240,120,120,0.5)"
             ],
             label: 'My dataset' // for legend
         }],
         labels: [
-            "Pierre",
             "Marco",
+            "Pierre",
             "BenJ",
         ]
     };
@@ -102,10 +102,17 @@ $(document).ready(function(){
 
         }
 
+        var scrollHeight = timelineContainer[0].scrollHeight;
+        if(scrollHeight > timelineContainer.height() + 500) {
+            timelineContainer.animate({
+                scrollTop: scrollHeight
+            }, 2000);
+        }
+
     }
 
 
-
+    var firstRender = false;
     function addToStats(blocksPeople, blockNb) {
         var i=0;
         blocksPeople.forEach(function(el) {
@@ -117,6 +124,8 @@ $(document).ready(function(){
                 [el.owner, blockNb+i, blockNb+i+1]
             ]);
             i++;
+
+
 
             chart.draw(dataTable, options);
 
@@ -226,6 +235,7 @@ $(document).ready(function(){
             colors: ['rgb(209,240,193)', 'rgb(233,194,191)', 'rgb(187,192,242)'],
         };
 
+
     function drawChart() {
         container = document.getElementById('timeline');
         chart = new google.visualization.Timeline(container);
@@ -235,10 +245,21 @@ $(document).ready(function(){
         dataTable.addColumn({ type: 'number', id: 'Start' });
         dataTable.addColumn({ type: 'number', id: 'End' });
         dataTable.addRows([
-            //[ 'marco',      new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
-            //[ 'ben',  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]
+            [ 'marco', 0,  0.1 ],
+            [ 'pierre', 0,  0.1 ],
+            [ 'ben', 0,  0.1 ],
         ]);
+
+        window.dataTable = dataTable;
+
+        console.log(dataTable);
 
         chart.draw(dataTable, options);
     }
+
+
+    $('#stop').on('click', function(){
+        clearInterval(interval);
+        clearInterval(intervalFakeCreation);
+    });
 });
