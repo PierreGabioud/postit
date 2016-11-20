@@ -1,7 +1,7 @@
 var profiles = [
-    '3405951d-6cbf-470f-8a02-65bdcbd9ba80', // marco
-    '9b30616a-8bd6-4334-8626-a1e909b3ffe9', // pierre
-    '2bc52c64-0b9e-46bd-b397-60f5ee0ec580' // benji
+    '9fab49a0-929e-48fa-8f79-b815b36ace74', // marco
+    'af3c680c-22c7-4ecd-8b52-a7291652d6bf', // pierre
+    'a2331af8-b01f-4e70-9f99-d71cf519a554' // benji
 ]
 
 
@@ -31,9 +31,9 @@ exports.treatBlock = (expid, timeid, outFinal) => {
 
 function mapProfiles (guid) {
     var profileMap =  {
-        '3405951d-6cbf-470f-8a02-65bdcbd9ba80': 'marco',
-        '9b30616a-8bd6-4334-8626-a1e909b3ffe9': 'pierre',
-        '2bc52c64-0b9e-46bd-b397-60f5ee0ec580': 'ben'
+        '9fab49a0-929e-48fa-8f79-b815b36ace74': 'marco',
+        'af3c680c-22c7-4ecd-8b52-a7291652d6bf': 'pierre',
+        'a2331af8-b01f-4e70-9f99-d71cf519a554': 'ben'
     };
     if (profileMap[guid]) return profileMap[guid];
     else return 'unknown';

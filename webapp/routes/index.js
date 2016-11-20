@@ -37,17 +37,20 @@ exports.register = function(server, options, next) {
             if (count == 25) {
                 count = 0;
                 var out = Buffer.concat([headerGen(audioBatch.length), audioBatch]);
-                fs.writeFile('0.wav', out, () => {
 
-                    var job = spawn('ffmpeg', ['-i', '0.wav', '-ac', '1', '-acodec', 'pcm_s16le', '-ar', '16000', '-y', '0_out.wav']);
+                ((timeid) => {
+                    fs.writeFile('0.wav', out, () => {
 
-                    job.on('close', (code) => {
-                        fs.readFile('0_out.wav', (err, outFinal) => {
-                            require('../controllers/block.js').treatBlock(expId, timeid, outFinal);
+                        var job = spawn('ffmpeg', ['-i', '0.wav', '-ac', '1', '-acodec', 'pcm_s16le', '-ar', '16000', '-y', '0_out.wav']);
 
+                        job.on('close', (code) => {
+                            fs.readFile('0_out.wav', (err, outFinal) => {
+                                require('../controllers/block.js').treatBlock(expId, timeid, outFinal);
+
+                            });
                         });
                     });
-                });
+                })(timeid)
                 audioBatch = null;
                 timeid++;
             }

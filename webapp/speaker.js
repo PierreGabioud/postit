@@ -135,5 +135,5 @@ exports.identify = function(profiles, wav) {
 2bc52c64-0b9e-46bd-b397-60f5ee0ec580 // benji
 */
 
-// createProfile(fs.readFileSync('ben.wav')).then(createEnrollment);
+// createProfile(fs.readFileSync('pierre.wav')).then(createEnrollment);
 // identify(['a499ce4c-6639-4940-82cc-3f9485e55370', '26c07b8e-4537-4ff7-bc68-8686725942e8'], fs.readFileSync('test.wav'););
