@@ -15,7 +15,7 @@ function initializeRecorder(stream) {
     var audioContext = window.AudioContext;
     var context = new audioContext();
     var audioInput = context.createMediaStreamSource(stream);
-    var bufferSize = 2048;
+    var bufferSize = 8192;
     // create a javascript node
     //var recorder = context.createJavaScriptNode(bufferSize, 1, 1);
     var recorder = context.createScriptProcessor(bufferSize, 1, 1);

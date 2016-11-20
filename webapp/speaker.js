@@ -1,10 +1,10 @@
 var request = require('request');
 var fs = require('fs');
 
-var subs_key = 'ac03208e324d47369daad0ceec6a6912';
+var subs_key = '33cdb7f928d3451cbbae38849f6be56d';
 
 
-function createProfile (name) {
+function createProfile (file) {
   var options = {
     url: 'https://api.projectoxford.ai/spid/v1.0/identificationProfiles',
     headers: {
@@ -22,7 +22,7 @@ function createProfile (name) {
     function callback(error, response, body) {
       resolve({
         key: JSON.parse(body).identificationProfileId,
-        name: name
+        file: file
       });
     }
 
@@ -31,8 +31,9 @@ function createProfile (name) {
 }
 
 function createEnrollment (params) {
-  console.log(params.name, params.key);
-  var wav = fs.readFileSync(params.name + '.wav');
+  console.log(params.file, params.key);
+  // var wav = fs.readFileSync(params.name + '.wav');
+  var wav = params.file
 
   var options = {
     url: 'https://api.projectoxford.ai/spid/v1.0/identificationProfiles/' + params.key + '/enroll?shortAudio=true',
@@ -121,6 +122,7 @@ exports.identify = function(profiles, wav) {
   return new Promise(function(resolve, reject) {
 
     function callback(error, response, body) {
+      console.log(JSON.stringify(response))
       console.log(response.headers['operation-location'])
       checkForCompletion(response.headers['operation-location'], resolve, reject);
     }
@@ -129,6 +131,11 @@ exports.identify = function(profiles, wav) {
 }
 
 
+/*
+3405951d-6cbf-470f-8a02-65bdcbd9ba80 // marco
+9b30616a-8bd6-4334-8626-a1e909b3ffe9 // pierre
+2bc52c64-0b9e-46bd-b397-60f5ee0ec580 // benji
+*/
 
-// createProfile('marco').then(createEnrollment);
+// createProfile(fs.readFileSync('ben.wav')).then(createEnrollment);
 // identify(['a499ce4c-6639-4940-82cc-3f9485e55370', '26c07b8e-4537-4ff7-bc68-8686725942e8'], fs.readFileSync('test.wav'););
