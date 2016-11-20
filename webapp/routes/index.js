@@ -20,7 +20,7 @@ exports.register = function(server, options, next) {
         '2876eb8f-37f4-4c53-8429-1364ffad4f45', //Bengi
         'a499ce4c-6639-4940-82cc-3f9485e55370', //Marco
         '26c07b8e-4537-4ff7-bc68-8686725942e8'  //Pierre
-    ]
+    ];
 
     var count = 0;
 

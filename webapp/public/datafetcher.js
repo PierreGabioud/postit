@@ -17,7 +17,8 @@ $(document).ready(function(){
 
     var timelineContainer = $('#timelineContainer'),
         keywordMatches = $('#keyword-matches'),
-        keywordMatchesAlarm = $('#keyword-matches-alarm');
+        keywordMatchesAlarm = $('#keyword-matches-alarm'),
+        enableAlarms = false;
 
 
     $('#keywords').on('input', function(){
@@ -28,6 +29,10 @@ $(document).ready(function(){
     $('#keywords-alarm').on('input', function(){
         keywordsAlarms = $(this).val().replace(/\s\s+/g, ' ').split(' ').filter(function(el){ return el.length > 2 });
         console.log(keywordsAlarms.length);
+    });
+
+    $('#enable-alarms').on('change', function(){
+       enableAlarms = $(this).is(':checked');
     });
 
 
@@ -193,7 +198,9 @@ $(document).ready(function(){
         });
         if(found) {
             addTextThatMatchedKeywordAlarm(newText);
-            launchVisualAlarm();
+            if(enableAlarms){
+                launchVisualAlarm();
+            }
         }
 
     }
