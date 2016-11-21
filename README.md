@@ -1,3 +1,3 @@
-# postit
-Post-it
-d
+# wavavaw
+
+Ultra-dirty meeting AI for LauzHack hackathon!
